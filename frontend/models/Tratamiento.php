@@ -30,7 +30,7 @@ class Tratamiento extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['idmascota'], 'default', 'value' => null],
+            //[['idmascota'], 'default', 'value' => null],
             [['idmascota'], 'integer'],
             [['nombre'], 'string', 'max' => 255],
             [['idmascota'], 'exist', 'skipOnError' => true, 'targetClass' => Mascota::className(), 'targetAttribute' => ['idmascota' => 'idmascota']],
@@ -74,6 +74,8 @@ class Tratamiento extends \yii\db\ActiveRecord
      */
     public function getIdmascota0()
     {
-        return $this->hasOne(Mascota::className(), ['idmascota' => 'idmascota']);
+        //return $this->hasOne(Mascota::className(), ['idmascota' => 'idmascota']);
+        $tratamiento = Mascota::find()->where(['idmascota'=>$this->idmascota])->one();
+        return $tratamiento;
     }
 }

@@ -71,7 +71,7 @@ class Especies extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdtipo0()
+    public function getEspTipo()
     {
         //return $this->hasOne(Estatus::className(), ['idestatus' => 'idtipo']);
         $estatus = Estatus::find()->where(['idestatus' => $this->idtipo])->one();
@@ -83,8 +83,10 @@ class Especies extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMascotas()
+    public function getEspMascotas()
     {
-        return $this->hasMany(Mascota::className(), ['idespecies' => 'idespecies']);
+        //return $this->hasMany(Mascota::className(), ['idespecies' => 'idespecies']);
+        $mascota = Mascota::find()->where(['idespecies' => $this->idespecies])->one();
+        return $mascota;
     }
 }

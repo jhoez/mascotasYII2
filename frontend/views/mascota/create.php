@@ -12,11 +12,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mascota-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <?= Html::a('Registros de Mascota', ['index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Estadistica', ['estadistica'], ['class' => 'btn btn-primary']) ?>
+    </p>
 
     <?= $this->render('_form', [
         'propietario'   => $propietario,
         'mascota'		=> $mascota,
-        'isla'			=> $isla,
         'islas'			=> $islas,
         'especies'		=> $especies,
         'tipo_especies'	=> $tipo_especies,

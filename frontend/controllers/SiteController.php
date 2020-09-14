@@ -42,12 +42,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','signup'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -92,6 +87,7 @@ class SiteController extends Controller
         $tipo_especies  = Estatus::find()->asArray()->where(['id_padre' => 1])->all();
         $selec          = Estatus::find()->asArray()->where(['id_padre' => 4])->all();
         $sexo           = Estatus::find()->asArray()->where(['id_padre' => 7])->all();
+        $isla           = new Islas;
         $islas          = Islas::find()->asArray()->all();
         $procedencia    = Procedencia::find()->asArray()->all();
         $propietario    = new Propietario;
@@ -107,6 +103,7 @@ class SiteController extends Controller
             $discapacidad->load(Yii::$app->request->post()) &&
             $tratamiento->load(Yii::$app->request->post())
         ) {
+            //echo "<pre>";var_dump(Yii::$app->request->post());die;
 
             if (
                 $propietario->validate() &&
@@ -116,14 +113,27 @@ class SiteController extends Controller
                 $discapacidad->validate() &&
                 $tratamiento->validate()
             ) {
-                $propietario->registrar();
-                $direccion->registrar();
-                $especies->registrar();
-                $mascota = $mascota->registrar();
-                $discapacidad->registrar();
-                $tratamiento->registrar();
-                Yii::$app->session->setFlash('success', '¡Se ha registrado una Mascota!');
-                return $this->redirect(['view', 'id' => $mascota->idmasc]);
+                $propietario = $propietario->registrar();
+                if ( $propietario ){
+                    $direccion = $direccion->registrar($propietario->idpropietario);
+                    if ( $direccion ) {
+                        $especies = $especies->registrar();
+                        if ( $especies ) {
+                            $mascota = $mascota->registrar($especies->idtipo,$propietario->idpropietario);
+                            if ( $mascota ) {
+                                $discapacidad = $discapacidad->registrar($mascota->idmascota);
+                                if ( $discapacidad ) {
+                                    $tratamiento = $tratamiento->registrar($mascota->idmascota);
+                                    //echo "<pre>";var_dump($tratamiento);die;
+                                    if ( $tratamiento ) {
+                                        Yii::$app->session->setFlash('success', '¡Se ha registrado una Mascota!');
+                                        return $this->redirect(['view', 'id' => $mascota->idmascota]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -135,11 +145,26 @@ class SiteController extends Controller
             'tipo_especies' => $tipo_especies,
             'selec'         => $selec,
             'sexo'          => $sexo,
+            'isla'          => $isla,
             'islas'         => $islas,
             'procedencia'   => $procedencia,
             'propietario'   => $propietario,
             'tratamiento'   => $tratamiento,
             'calle'         => $calle
+        ]);
+    }
+
+    /**
+     * Displays a single Mascota model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        $model = Mascota::findOne($id);
+        return $this->render('view', [
+            'model' => $model,
         ]);
     }
 

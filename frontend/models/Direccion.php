@@ -82,9 +82,11 @@ class Direccion extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCalle()
+    public function getDirCalle()
     {
-        return $this->hasOne(CarnetCalle::className(), ['id' => 'id_calle']);
+        //return $this->hasOne(Calle::className(), ['id' => 'id_calle']);
+        $calle = Calle::find()->where(['id'=>$this->id_calle])->one();
+        return $calle;
     }
 
     /**
@@ -92,9 +94,11 @@ class Direccion extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdislas0()
+    public function getDirIsla()
     {
-        return $this->hasOne(Islas::className(), ['idislas' => 'idislas']);
+        //return $this->hasOne(Islas::className(), ['idislas' => 'idislas']);
+        $isla = Islas::find()->where(['idislas'=>$this->idislas])->one();
+        return $isla;
     }
 
     /**
@@ -102,8 +106,10 @@ class Direccion extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdpropietario0()
+    public function getDirPropietario()
     {
-        return $this->hasOne(Propietario::className(), ['idpropietario' => 'idpropietario']);
+        //return $this->hasOne(Propietario::className(), ['idpropietario' => 'idpropietario']);
+        $propietario = Propietario::find()->where(['idpropietario'=>$this->idpropietario])->one();
+        return $propietario;
     }
 }

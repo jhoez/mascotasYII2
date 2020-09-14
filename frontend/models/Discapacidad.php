@@ -72,8 +72,10 @@ class Discapacidad extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdmascota0()
+    public function getDiscMascota()
     {
-        return $this->hasOne(Mascota::className(), ['idmascota' => 'idmascota']);
+        //return $this->hasOne(Mascota::className(), ['idmascota' => 'idmascota']);
+        $mascota = Mascota::find()->where(['idmascota'=>$this->idmascota])->one();
+        return $mascota;
     }
 }

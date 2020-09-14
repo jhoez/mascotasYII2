@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\db\Query;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -10,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\Usuario;
 use frontend\models\Mascota;
+use frontend\models\MascotaSearch;
 use frontend\models\Direccion;
 use frontend\models\Discapacidad;
 use frontend\models\Especies;
@@ -19,6 +21,7 @@ use frontend\models\Procedencia;
 use frontend\models\Propietario;
 use frontend\models\Tratamiento;
 use frontend\models\Calle;
+use kartik\mpdf\Pdf;
 
 /**
  * MascotaController implements the CRUD actions for Mascota model.
@@ -85,6 +88,172 @@ class MascotaController extends Controller
         $discapacidad   = new Discapacidad;
         $tratamiento    = new Tratamiento;
 
+        if (Yii::$app->request->post()) {
+            $query = new Query;
+            $query ->select([
+                'regmasc.islas.nombre as nombisla',
+                'carnet.calle.nombre as nombre_calle',
+                'regmasc.mascota.nombre as nombre_mascota',
+                'sexo.nombre as sexo_mascota',
+                'regmasc.mascota.edad as anio_mascota',
+                'regmasc.procedencia.nombre as procedencia_mascota',
+                'regmasc.especies.raza as raza_mascota',
+                'regmasc.especies.color as color_mascota',
+                'vacuna.nombre as vacunado_mascota',
+                'despa.nombre as esta_desparacitado',
+                'disc.nombre as tiene_discapacidad',
+                'disca.nombre as discanimal',
+                'tra.nombre as tiene_trataramiento',
+                'trata.nombre as tratanimal',
+                'este.nombre as estere'
+            ])
+            ->from('regmasc.mascota');
+            $query->join(
+                'INNER JOIN',
+                'regmasc.propietario',
+                'regmasc.propietario.idpropietario = regmasc.mascota.idpropietario'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.direccion',
+                'regmasc.direccion.idpropietario = regmasc.propietario.idpropietario'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.islas',
+                'regmasc.islas.idislas = regmasc.direccion.idislas'
+            );
+            $query->join(
+                'INNER JOIN',
+                'carnet.calle',
+                'carnet.calle.id = regmasc.direccion.id_calle'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.especies',
+                'regmasc.especies.idespecies = regmasc.mascota.idespecies'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.estatus as sexo',
+                'sexo.idestatus = regmasc.mascota.sexo'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.procedencia',
+                'regmasc.procedencia.idprocedencia = regmasc.mascota.idprocedencia'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.estatus as vacuna',
+                'vacuna.idestatus = regmasc.mascota.vacuna_antirab'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.estatus as despa',
+                'despa.idestatus = regmasc.mascota.desparacitado'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.estatus as disc',
+                'disc.idestatus = regmasc.mascota.discapacidad'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.estatus as tra',
+                'tra.idestatus = regmasc.mascota.tratamiento'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.estatus as este',
+                'este.idestatus = regmasc.mascota.esterelizado'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.discapacidad as disca',
+                'disca.idmascota = regmasc.mascota.idmascota'
+            );
+            $query->join(
+                'INNER JOIN',
+                'regmasc.tratamiento as trata',
+                'trata.idmascota = regmasc.mascota.idmascota'
+            );
+
+            if ( !empty($_POST['Islas']['idislas']) ){
+                //$arreglopost['regmasc.direccion.idislas'] = (int)$_POST['Islas']['idislas'];
+                $query->andWhere('regmasc.direccion.idislas=:idislas',[':idislas'=>(int)$_POST['Islas']['idislas']]);
+            }
+            if ( !empty($_POST['Direccion']['id_calle']) ){
+                //$arreglopost['regmasc.direccion.id_calle'] = (int)$_POST['Direccion']['id_calle'];
+                $query->andWhere('regmasc.direccion.id_calle=:id_calle',[':id_calle'=>(int)$_POST['Direccion']['id_calle']]);
+            }
+            if ( !empty($_POST['Especies']['idtipo']) ){
+                //$arreglopost['regmasc.especies.idtipo'] = (int)$_POST['Especies']['idtipo'];
+                $query->andWhere('regmasc.especies.idtipo=:idtipo',[':idtipo'=>(int)$_POST['Especies']['idtipo']]);
+            }
+            if ( !empty($_POST['Mascota']['sexo']) ){
+                //$arreglopost['regmasc.mascota.sexo'] = (int)$_POST['Mascota']['sexo'];
+                $query->andWhere('regmasc.mascota.sexo=:sexo',[':sexo'=>(int)$_POST['Mascota']['sexo']]);
+            }
+            if ( !empty($_POST['Mascota']['idprocedencia']) ){
+                //$arreglopost['regmasc.mascota.idprocedencia'] = (int)$_POST['Mascota']['idprocedencia'];
+                $query->andWhere('regmasc.mascota.idprocedencia=:idprocedencia',[':idprocedencia'=>(int)$_POST['Mascota']['idprocedencia']]);
+            }
+            if ( !empty($_POST['Mascota']['vacuna_antirab']) ){
+                //$arreglopost['regmasc.mascota.vacuna_antirab'] = (int)$_POST['Mascota']['vacuna_antirab'];
+                $query->andWhere('regmasc.mascota.vacuna_antirab=:vacuna_antirab',[':vacuna_antirab'=>(int)$_POST['Mascota']['vacuna_antirab']]);
+            }
+            if ( !empty($_POST['Mascota']['desparacitado']) ){
+                //$arreglopost['regmasc.mascota.desparacitado'] = (int)$_POST['Mascota']['desparacitado'];
+                $query->andWhere('regmasc.mascota.desparacitado=:desparacitado',[':desparacitado'=>(int)$_POST['Mascota']['desparacitado']]);
+            }
+            if ( !empty($_POST['Mascota']['discapacidad']) ){
+                //$arreglopost['regmasc.mascota.discapacidad'] = (int)$_POST['Mascota']['discapacidad'];
+                $query->andWhere('regmasc.mascota.discapacidad=:discapacidad',[':discapacidad'=>(int)$_POST['Mascota']['discapacidad']]);
+            }
+            if ( !empty($_POST['Mascota']['tratamiento']) ){
+                //$arreglopost['regmasc.mascota.tratamiento'] = (int)$_POST['Mascota']['tratamiento'];
+                $query->andWhere('regmasc.mascota.tratamiento=:tratamiento',[':tratamiento'=>(int)$_POST['Mascota']['tratamiento']]);
+            }
+            if ( !empty($_POST['Mascota']['esterelizado']) ){
+                //$arreglopost['regmasc.mascota.esterelizado'] = (int)$_POST['Mascota']['esterelizado'];
+                $query->andWhere('regmasc.mascota.esterelizado=:esterelizado',[':esterelizado'=>(int)$_POST['Mascota']['esterelizado']]);
+            }
+
+            //echo "<pre>";var_dump($_POST);die;
+            //$query->where($arreglopost);
+            $command = $query->createCommand();
+            $mascota = $command->queryAll();
+            echo "<pre>";var_dump($command->sql,$mascota);die;
+
+            $vista = $this->renderPartial('_reportePDF',['mascota'=>$mascota]);
+
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_CORE,// set to use core fonts only
+                'format' => Pdf::FORMAT_A4,// A4 paper format
+                'orientation' => Pdf::ORIENT_PORTRAIT,// portrait orientation
+                'destination' => Pdf::DEST_DOWNLOAD,// stream to browser inline
+                'content' => $vista,// your html content input
+                'filename'=> 'ReporteMascota-'.date('Y-m-d h:i:s',time()).'.pdf',
+                // format content from your own css file if needed or use the
+                // enhanced bootstrap css built by Krajee for mPDF formatting
+                'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                'cssInline' => '.kv-heading-1{font-size:12px}',// any css to be embedded if required
+                //'options' => ['title' => 'Reporte de Mascota'],// set mPDF properties on the fly
+                 // call mPDF methods on the fly
+                'methods' => [
+                    //'SetHeader'=>['Reporte de Mascota'],
+                    //'SetFooter'=>['{PAGENO}'],
+                ]
+            ]);
+
+            // return the pdf output as per the destination setting
+            return $pdf->render();
+        }
+
+        if ($mascota->load(Yii::$app->request->post())) {
+        }
+
         return $this->render('reporte',[
             'mascota'		=> $mascota,
 			'isla'			=> $isla,
@@ -107,13 +276,23 @@ class MascotaController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new MascotaSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+        /*
+        // no agrega el filtro de busqueda
         $dataProvider = new ActiveDataProvider([
             'query' => Mascota::find(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);
+        ]);*/
     }
 
     /**
@@ -138,7 +317,6 @@ class MascotaController extends Controller
     {
         $propietario    = new Propietario;
         $mascota        = new Mascota;
-        $isla           = new Islas;
         $islas          = Islas::find()->asArray()->all();
         $especies       = new Especies;
         $tipo_especies  = Estatus::find()->asArray()->where(['id_padre' => 1])->all();
@@ -159,8 +337,6 @@ class MascotaController extends Controller
             $discapacidad->load(Yii::$app->request->post()) &&
             $tratamiento->load(Yii::$app->request->post())
         ) {
-            //echo "<pre>";var_dump($_POST);die;
-
             if (
                 $propietario->validate() &&
                 $direccion->validate() &&
@@ -196,7 +372,6 @@ class MascotaController extends Controller
         return $this->render('create', [
             'propietario'   => $propietario,
             'mascota'		=> $mascota,
-			'isla'			=> $isla,
 			'islas'			=> $islas,
 			'especies'		=> $especies,
 			'tipo_especies'	=> $tipo_especies,
@@ -219,14 +394,75 @@ class MascotaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $mascota        = $this->findModel($id);
+        $propietario    = Propietario::find()->where(['idpropietario'=>$mascota->idpropietario])->one();
+        $direccion      = Direccion::find()->where(['idpropietario'=>$propietario->idpropietario])->one();
+        $islas          = Islas::find()->asArray()->all();
+        $especies       = Especies::find()->where(['idtipo'=>$mascota->idespecies])->one();
+        //$tipo_especies  = Estatus::find()->asArray()->where(['idestatus' => $especies->idtipo])->all();
+        //$sexo           = Estatus::find()->asArray()->where(['idestatus' => $mascota->sexo])->all();
+        $tipo_especies  = Estatus::find()->asArray()->where(['id_padre' => 1])->all();
+        $sexo           = Estatus::find()->asArray()->where(['id_padre' => 7])->all();
+        $calle          = Calle::find()->asArray()->all();
+        $procedencia    = Procedencia::find()->asArray()->all();
+        $selec          = Estatus::find()->asArray()->where(['id_padre' => 4])->all();
+        $discapacidad   = Discapacidad::find()->where(['idmascota' => $mascota->idmascota])->one();
+        $tratamiento    = Tratamiento::find()->where(['idmascota' => $mascota->idmascota])->one();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idmasc]);
+        //$propietario->attributes = Yii::$app->request->post('Propietario');
+        if (
+            $propietario->load(Yii::$app->request->post()) &&// poblar los atributos del modelo desde la entrada del usuario
+            $direccion->load(Yii::$app->request->post()) &&
+            $especies->load(Yii::$app->request->post()) &&
+            $mascota->load(Yii::$app->request->post()) &&
+            $discapacidad->load(Yii::$app->request->post()) &&
+            $tratamiento->load(Yii::$app->request->post())
+        ) {
+            if (
+                $propietario->validate() &&
+                $direccion->validate() &&
+                $especies->validate() &&
+                $mascota->validate() &&
+                $discapacidad->validate() &&
+                $tratamiento->validate()
+            ) {
+                $propietario = $propietario->registrar();
+                if ( $propietario ){
+                    $direccion = $direccion->registrar($propietario->idpropietario);
+                    if ( $direccion ) {
+                        $especies = $especies->registrar();
+                        if ( $especies ) {
+                            $mascota = $mascota->registrar($especies->idtipo,$propietario->idpropietario);
+                            if ( $mascota ) {
+                                $discapacidad = $discapacidad->registrar($mascota->idmascota);
+                                if ( $discapacidad ) {
+                                    $tratamiento = $tratamiento->registrar($mascota->idmascota);
+                                    //echo "<pre>";var_dump($tratamiento);die;
+                                    if ( $tratamiento ) {
+                                        Yii::$app->session->setFlash('success', '¡Se ha Actualizado una Mascota!');
+                                        return $this->redirect(['view', 'id' => $mascota->idmascota]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'propietario'   => $propietario,
+            'mascota'		=> $mascota,
+			'islas'			=> $islas,
+			'especies'		=> $especies,
+			'tipo_especies'	=> $tipo_especies,
+			'sexo'			=> $sexo,
+			'direccion'		=> $direccion,
+            'calle'         => $calle,
+			'procedencia'	=> $procedencia,
+			'selec'			=> $selec,
+			'discapacidad'	=> $discapacidad,
+			'tratamiento'	=> $tratamiento
         ]);
     }
 

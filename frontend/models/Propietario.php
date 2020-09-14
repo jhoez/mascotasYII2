@@ -92,9 +92,11 @@ class Propietario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getDireccions()
+    public function getProDireccion()
     {
-        return $this->hasMany(Direccion::className(), ['idpropietario' => 'idpropietario']);
+        //return $this->hasMany(Direccion::className(), ['idpropietario' => 'idpropietario']);
+        $direccion = Direccion::find()->where(['idpropietario'=>$this->idpropietario])->one();
+        return $direccion;
     }
 
     /**
@@ -102,9 +104,11 @@ class Propietario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMascotas()
+    public function getProMascota()
     {
-        return $this->hasMany(Mascota::className(), ['idpropietario' => 'idpropietario']);
+        //return $this->hasMany(Mascota::className(), ['idpropietario' => 'idpropietario']);
+        $mascota = Mascota::find()->where(['idpropietario'=>$this->idpropietario])->one();
+        return $mascota;
     }
 
     /**
@@ -112,8 +116,10 @@ class Propietario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPersonaCarnet()
+    public function getProPersonaCarnet()
     {
-        return $this->hasOne(CarnetPersona::className(), ['id' => 'id_persona_carnet']);
+        //return $this->hasOne(CarnetPersona::className(), ['id' => 'id_persona_carnet']);
+        $persona = Persona::find()->where(['id'=>$this->id_persona_carnet])->one();
+        return $persona;
     }
 }

@@ -38,17 +38,17 @@ AppAsset::register($this);
 
     if (Yii::$app->user->isGuest) {
         $menuItems = [
-            ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => 'Login', 'url' => ['/site/login']],
+            ['label' => 'Signup', 'url' => ['/site/signup']],
         ];
     } else {
         $menuItems = [
             ['label' => 'Home', 'url' => ['/site/index'] ],
             ['label' => 'Mascotas','url' => ['/mascota/index'] ],
-            ['label' => 'Islas','url' => ['/islas/index'] ],
-            ['label' => 'Estadistica','url' => ['/mascota/estadistica'] ],
-            ['label' => 'Registrar usuario', 'url' => ['/site/signup']],
-            ['label' => 'About', 'url' => ['/site/about'] ],
-            ['label' => 'Contact', 'url' => ['/site/contact'] ],
+            ['label' => 'Reporte','url' => ['/mascota/estadistica'] ],
+            //['label' => 'Signup', 'url' => ['/site/signup']],
+            //['label' => 'About', 'url' => ['/site/about'] ],
+            //['label' => 'Contact', 'url' => ['/site/contact'] ],
         ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

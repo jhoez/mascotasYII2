@@ -7,11 +7,11 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Mascota */
 
 $this->title = 'Detalles de la mascota registrada';
-$this->params['breadcrumbs'][] = ['label' => 'Mascotas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Home', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Detalles';
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="mascota-view">
+<div class="site-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -49,6 +49,8 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->cedula;
                 },
+                //'contentOptions'=>['class'=>'bg-red'],
+                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Nombres',
@@ -56,6 +58,8 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->nombres;
                 },
+                //'contentOptions'=>['class'=>'bg-red'],
+                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Apellidos',
@@ -63,6 +67,8 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->apellidos;
                 },
+                //'contentOptions'=>['class'=>'bg-red'],
+                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Islas - Cayos',
@@ -70,6 +76,8 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->getProDireccion()->getDirIsla()->nombre;
                 },
+                //'contentOptions'=>['class'=>'bg-red'],
+                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Calle',
@@ -110,9 +118,7 @@ $this->params['breadcrumbs'][] = 'Detalles';
             [
                 'label'=>'Nombre de la Mascota',
                 'attribute'=>'nombre',
-                'value'=>function($data){
-                    return $data->nombre;
-                },
+                'value'=>'nombre',
                 //'contentOptions'=>['class'=>'bg-red'],
                 //'captionOptions'=>['tooltip'=>'tooltip']
             ],

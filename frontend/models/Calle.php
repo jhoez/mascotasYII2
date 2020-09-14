@@ -49,8 +49,10 @@ class Calle extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getDireccions()
+    public function getCaDireccion()
     {
-        return $this->hasMany(Direccion::className(), ['id_calle' => 'id']);
+        //return $this->hasMany(Direccion::className(), ['id_calle' => 'id']);
+        $calle = Direccion::find()->where(['id_calle'=>$this->id])->one();
+        return $calle;
     }
 }

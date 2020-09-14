@@ -93,10 +93,6 @@ class IslasController extends Controller
     {
         $islas = new Islas();
 
-        /*if (isset($_POST)) {
-            echo "<pre>";var_dump($_POST);die;
-        }*/
-
         if ( $islas->load(Yii::$app->request->post()) ) {
             if (
                 $islas->validate()

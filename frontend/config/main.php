@@ -6,6 +6,8 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+use kartik\mpdf\Pdf;
+
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -43,6 +45,13 @@ return [
             'rules' => [
             ],
         ],
+        'pdf' => [
+            'class' => Pdf::classname(),
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            // refer settings section for all configuration options
+        ]
     ],
     'params' => $params,
 ];

@@ -13,6 +13,10 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="mascota-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <?= Html::a('Registrar Mascota', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Reportes', ['reportesPE'], ['class' => 'btn btn-primary']) ?>
+    </p>
 
     <?= $this->render('_form', [
         'propietario'   => $propietario,

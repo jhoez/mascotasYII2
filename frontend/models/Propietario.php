@@ -40,6 +40,7 @@ class Propietario extends \yii\db\ActiveRecord
             [['nombres', 'apellidos', 'cedula', 'telefono', 'nacionalidad', 'correo'], 'required'],
             [['cedula', 'id_persona_carnet'], 'default', 'value' => null],
             [['cedula', 'id_persona_carnet'], 'integer'],
+            ['cedula','match','pattern'=>'/^[0-9]+$/i','message'=>'Solo se aceptan Numeros'],
             [['nombres', 'apellidos', 'correo'], 'string', 'max' => 255],
             [['telefono'], 'string', 'max' => 45],
             [['nacionalidad'], 'string', 'max' => 1],

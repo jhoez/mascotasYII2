@@ -113,7 +113,14 @@ class SiteController extends Controller
                 $discapacidad->validate() &&
                 $tratamiento->validate()
             ) {
-                $propietario = $propietario->registrar();
+                //verificar si existe el propietario y mandar el idpropietario
+                $prop = Propietario::find()->where(['cedula'=>$propietario->cedula])->one();
+                if (isset($prop)) {
+                    $propietario = $prop;
+                }else{
+                    $propietario = $propietario->registrar();
+                }
+
                 if ( $propietario ){
                     $direccion = $direccion->registrar($propietario->idpropietario);
                     if ( $direccion ) {

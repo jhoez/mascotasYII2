@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = 'Detalles';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idmascota], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idmascota], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->idmascota], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->idmascota], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Esta seguro de eliminar este registro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -33,7 +33,27 @@ $this->params['breadcrumbs'][] = 'Detalles';
             'class'=>'detail-view-2 table table-bordered',
         ],*/
         'attributes' => [
-            'idmascota',
+            [
+                'label'=>'Id Mascota',
+                'attribute'=>'idmascota',
+                'value'=>function($data){
+                    return $data->idmascota;
+                },
+            ],
+            /*[
+                'label'=>'Id propietario',
+                'attribute'=>'idpropietario',
+                'value'=>function($data){
+                    return $data->getMascPropietario()->idpropietario;
+                },
+            ],
+            [
+                'label'=>'Id propietario mascota',
+                'attribute'=>'idpropietario',
+                'value'=>function($data){
+                    return $data->idpropietario;
+                },
+            ],*/
             [
                 'label'=>'Nacionalidad',
                 'attribute'=>'nacionalidad',
@@ -77,8 +97,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->getProDireccion()->getDirCalle()->nombre;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'N# casa',
@@ -86,8 +104,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->getProDireccion()->ncasa;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Telefono',
@@ -95,8 +111,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->telefono;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Correo',
@@ -104,8 +118,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascPropietario()->correo;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Nombre de la Mascota',
@@ -113,8 +125,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->nombre;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Edad',
@@ -122,17 +132,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->edad;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
-            ],
-            [
-                'label'=>'Sexo',
-                'attribute'=>'sexo',
-                'value'=>function($data){
-                    return $data->getMascSexo()->nombre;
-                },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Tipo de mascota',
@@ -140,8 +139,27 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascTipoMascota()->getEspTipo()->nombre;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
+            ],
+            [
+                'label'=>'Sexo',
+                'attribute'=>'sexo',
+                'value'=>function($data){
+                    return $data->getMascSexo()->nombre;
+                },
+            ],
+            [
+                'label'=>'Raza',
+                'attribute'=>'raza',
+                'value'=>function($data){
+                    return $data->getMascTipoMascota()->raza;
+                },
+            ],
+            [
+                'label'=>'Color',
+                'attribute'=>'color',
+                'value'=>function($data){
+                    return $data->getMascTipoMascota()->color;
+                },
             ],
             [
                 'label'=>'Procedencia',
@@ -149,8 +167,6 @@ $this->params['breadcrumbs'][] = 'Detalles';
                 'value'=>function($data){
                     return $data->getMascProcedencia()->nombre;
                 },
-                //'contentOptions'=>['class'=>'bg-red'],
-                //'captionOptions'=>['tooltip'=>'tooltip']
             ],
             [
                 'label'=>'Esta vacunado',

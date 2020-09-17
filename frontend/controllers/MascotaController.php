@@ -22,6 +22,7 @@ use frontend\models\Propietario;
 use frontend\models\Tratamiento;
 use frontend\models\Calle;
 use kartik\mpdf\Pdf;
+use yii\helpers\Html;
 
 /**
  * MascotaController implements the CRUD actions for Mascota model.
@@ -38,7 +39,9 @@ class MascotaController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','view','logout','create','estadistica','update','delete'],
+                        'actions' => [
+                            'index','view','logout','create','reportes','update','delete'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,7 +76,7 @@ class MascotaController extends Controller
     * crea un pdf o excel
     * @return PDF
     */
-    public function actionEstadistica()
+    public function actionReportes()
     {
         $mascota        = new Mascota;
         $direccion      = new Direccion;
@@ -224,34 +227,37 @@ class MascotaController extends Controller
             //$query->where($arreglopost);
             $command = $query->createCommand();
             $mascota = $command->queryAll();
-            echo "<pre>";var_dump($command->sql,$mascota);die;
+            //echo "<pre>";var_dump($command->sql,$mascota);die;
 
-            $vista = $this->renderPartial('_reportePDF',['mascota'=>$mascota]);
+            if ($mascota) {
+                $vista = $this->renderPartial('_reportePDF',['mascota'=>$mascota]);
 
-            $pdf = new Pdf([
-                'mode' => Pdf::MODE_CORE,// set to use core fonts only
-                'format' => Pdf::FORMAT_A4,// A4 paper format
-                'orientation' => Pdf::ORIENT_PORTRAIT,// portrait orientation
-                'destination' => Pdf::DEST_DOWNLOAD,// stream to browser inline
-                'content' => $vista,// your html content input
-                'filename'=> 'ReporteMascota-'.date('Y-m-d h:i:s',time()).'.pdf',
-                // format content from your own css file if needed or use the
-                // enhanced bootstrap css built by Krajee for mPDF formatting
-                'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-                'cssInline' => '.kv-heading-1{font-size:12px}',// any css to be embedded if required
-                //'options' => ['title' => 'Reporte de Mascota'],// set mPDF properties on the fly
-                 // call mPDF methods on the fly
-                'methods' => [
-                    //'SetHeader'=>['Reporte de Mascota'],
-                    //'SetFooter'=>['{PAGENO}'],
-                ]
-            ]);
+                $pdf = new Pdf([
+                    'mode' => Pdf::MODE_CORE,// set to use core fonts only
+                    'format' => Pdf::FORMAT_A4,// A4 paper format
+                    'orientation' => Pdf::ORIENT_PORTRAIT,// portrait orientation
+                    'destination' => Pdf::DEST_DOWNLOAD,// stream to browser inline
+                    'content' => $vista,// your html content input
+                    'filename'=> 'ReporteMascota-'.date('Y-m-d h:i:s',time()).'.pdf',
+                    // format content from your own css file if needed or use the
+                    // enhanced bootstrap css built by Krajee for mPDF formatting
+                    'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                    'cssInline' => '.kv-heading-1{font-size:12px}',// any css to be embedded if required
+                    //'options' => ['title' => 'Reporte de Mascota'],// set mPDF properties on the fly
+                     // call mPDF methods on the fly
+                    'methods' => [
+                        //'SetHeader'=>['Reporte de Mascota'],
+                        //'SetFooter'=>['{PAGENO}'],
+                    ]
+                ]);
 
-            // return the pdf output as per the destination setting
-            return $pdf->render();
-        }
-
-        if ($mascota->load(Yii::$app->request->post())) {
+                // return the pdf output as per the destination setting
+                Yii::$app->session->setFlash('success', '¡Se ha creado el reporte!');
+                $this->refresh();
+                return $pdf->render();
+            }else {
+                Yii::$app->session->setFlash('warning', '¡No coinciden los datos que solicita!');
+            }
         }
 
         return $this->render('reporte',[
@@ -345,7 +351,14 @@ class MascotaController extends Controller
                 $discapacidad->validate() &&
                 $tratamiento->validate()
             ) {
-                $propietario = $propietario->registrar();
+                //verificar si existe el propietario y mandar el idpropietario
+                $prop = Propietario::find()->where(['cedula'=>$propietario->cedula])->one();
+                if (isset($prop)) {
+                    $propietario = $prop;
+                }else{
+                    $propietario = $propietario->registrar();
+                }
+
                 if ( $propietario ){
                     $direccion = $direccion->registrar($propietario->idpropietario);
                     if ( $direccion ) {
@@ -399,8 +412,6 @@ class MascotaController extends Controller
         $direccion      = Direccion::find()->where(['idpropietario'=>$propietario->idpropietario])->one();
         $islas          = Islas::find()->asArray()->all();
         $especies       = Especies::find()->where(['idtipo'=>$mascota->idespecies])->one();
-        //$tipo_especies  = Estatus::find()->asArray()->where(['idestatus' => $especies->idtipo])->all();
-        //$sexo           = Estatus::find()->asArray()->where(['idestatus' => $mascota->sexo])->all();
         $tipo_especies  = Estatus::find()->asArray()->where(['id_padre' => 1])->all();
         $sexo           = Estatus::find()->asArray()->where(['id_padre' => 7])->all();
         $calle          = Calle::find()->asArray()->all();
@@ -426,19 +437,38 @@ class MascotaController extends Controller
                 $discapacidad->validate() &&
                 $tratamiento->validate()
             ) {
-                $propietario = $propietario->registrar();
-                if ( $propietario ){
-                    $direccion = $direccion->registrar($propietario->idpropietario);
-                    if ( $direccion ) {
-                        $especies = $especies->registrar();
-                        if ( $especies ) {
-                            $mascota = $mascota->registrar($especies->idtipo,$propietario->idpropietario);
-                            if ( $mascota ) {
-                                $discapacidad = $discapacidad->registrar($mascota->idmascota);
-                                if ( $discapacidad ) {
-                                    $tratamiento = $tratamiento->registrar($mascota->idmascota);
-                                    //echo "<pre>";var_dump($tratamiento);die;
-                                    if ( $tratamiento ) {
+                //echo "<pre>";var_dump($_POST);die;
+                $propietario->nombres = Html::encode($_POST['Propietario']['nombres']);
+                $propietario->apellidos = Html::encode($_POST['Propietario']['apellidos']);
+                $propietario->cedula = Html::encode($_POST['Propietario']['cedula']);
+                $propietario->telefono = Html::encode($_POST['Propietario']['telefono']);
+                $propietario->nacionalidad = Html::encode($_POST['Propietario']['nacionalidad']);
+                $propietario->correo = Html::encode($_POST['Propietario']['correo']);
+                if ( $propietario->update() ){
+                    $direccion->idislas = Html::encode($_POST['Direccion']['idislas']);
+                    $direccion->ncasa = Html::encode($_POST['Direccion']['ncasa']);
+                    $direccion->id_calle = Html::encode($_POST['Direccion']['id_calle']);
+                    if ( $direccion->update() ){
+                        $especies->idtipo = Html::encode($_POST['Especies']['idtipo']);
+                        $especies->raza = Html::encode($_POST['Especies']['raza']);
+                        $especies->color = Html::encode($_POST['Especies']['color']);
+                        if ( $especies->update() ) {
+                            $mascota->idespecies = $especies->idespecies;
+                            $mascota->idprocedencia = Html::encode($_POST['Mascota']['idprocedencia']);
+                            $mascota->idpropietario = $propietario->idpropietario;
+                            $mascota->nombre = Html::encode($_POST['Mascota']['nombre']);
+                            $mascota->sexo = Html::encode($_POST['Mascota']['sexo']);
+                            $mascota->edad = Html::encode($_POST['Mascota']['edad']);
+                            $mascota->vacuna_antirab = Html::encode($_POST['Mascota']['vacuna_antirab']);
+                            $mascota->desparacitado = Html::encode($_POST['Mascota']['desparacitado']);
+                            $mascota->discapacidad = Html::encode($_POST['Mascota']['discapacidad']);
+                            $mascota->tratamiento = Html::encode($_POST['Mascota']['tratamiento']);
+                            $mascota->esterelizado = Html::encode($_POST['Mascota']['esterelizado']);
+                            if ( $mascota->update() ) {
+                                $discapacidad->nombre = Html::encode($_POST['Discapacidad']['nombre']);
+                                if ( $discapacidad->update() ) {
+                                    $tratamiento->nombre = Html::encode($_POST['Tratamiento']['nombre']);
+                                    if ( $tratamiento->update() ) {
                                         Yii::$app->session->setFlash('success', '¡Se ha Actualizado una Mascota!');
                                         return $this->redirect(['view', 'id' => $mascota->idmascota]);
                                     }

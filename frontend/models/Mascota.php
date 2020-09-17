@@ -141,9 +141,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascTipoMascota()
     {
-        //return $this->hasOne(Especies::className(), ['idespecies' => 'idespecies']);
         $especies = Especies::find()->where(['idespecies' => $this->idespecies])->one();
         return $especies;
+    }
+    public function getTipoMascota()
+    {
+        return $this->hasOne(Especies::className(), ['idespecies' => 'idespecies']);
     }
 
     /**
@@ -153,9 +156,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascSexo()
     {
-        //return $this->hasOne(Estatus::className(), ['idestatus' => 'sexo']);
         $estatus = Estatus::find()->where(['idestatus'=>$this->sexo])->one();
         return $estatus;
+    }
+    public function getSexo()
+    {
+        return $this->hasOne(Estatus::className(), ['idestatus' => 'sexo']);
     }
 
     /**
@@ -165,9 +171,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascEstaVacunado()
     {
-        //return $this->hasOne(Estatus::className(), ['idestatus' => 'vacuna_antirab']);
         $estatus = Estatus::find()->where(['idestatus'=>$this->vacuna_antirab])->one();
         return $estatus;
+    }
+    public function getEstaVacunado()
+    {
+        return $this->hasOne(Estatus::className(), ['idestatus' => 'vacuna_antirab']);
     }
 
     /**
@@ -177,9 +186,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascEstaDesparacitado()
     {
-        //return $this->hasOne(Estatus::className(), ['idestatus' => 'desparacitado']);
         $estatus = Estatus::find()->where(['idestatus'=>$this->desparacitado])->one();
         return $estatus;
+    }
+    public function getEstaDesparacitado()
+    {
+        return $this->hasOne(Estatus::className(), ['idestatus' => 'desparacitado']);
     }
 
     /**
@@ -189,9 +201,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascTieneDiscapacidad()
     {
-        //return $this->hasOne(Estatus::className(), ['idestatus' => 'discapacidad']);
         $estatus = Estatus::find()->where(['idestatus'=>$this->discapacidad])->one();
         return $estatus;
+    }
+    public function getTieneDiscapacidad()
+    {
+        return $this->hasOne(Estatus::className(), ['idestatus' => 'discapacidad']);
     }
 
     /**
@@ -201,9 +216,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascDiscapacidad()
     {
-        //return $this->hasMany(Discapacidad::className(), ['idmascota' => 'idmascota']);
         $discapacidad = Discapacidad::find()->where(['idmascota'=>$this->idmascota])->one();
         return $discapacidad;
+    }
+    public function getDiscapacidad()
+    {
+        return $this->hasMany(Discapacidad::className(), ['idmascota' => 'idmascota']);
     }
 
     /**
@@ -213,9 +231,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascTieneTratamiento()
     {
-        //return $this->hasOne(Estatus::className(), ['idestatus' => 'tratamiento']);
         $estatus = Estatus::find()->where(['idestatus'=>$this->tratamiento])->one();
         return $estatus;
+    }
+    public function getTieneTratamiento()
+    {
+        return $this->hasOne(Estatus::className(), ['idestatus' => 'tratamiento']);
     }
 
     /**
@@ -225,9 +246,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascTratamiento()
     {
-        //return $this->hasMany(Tratamiento::className(), ['idmascota' => 'idmascota']);
         $tratamiento = Tratamiento::find()->where(['idmascota'=>$this->idmascota])->one();
         return $tratamiento;
+    }
+    public function getTratamiento()
+    {
+        return $this->hasMany(Tratamiento::className(), ['idmascota' => 'idmascota']);
     }
 
     /**
@@ -237,9 +261,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascEstaEsterelizado()
     {
-        //return $this->hasOne(Estatus::className(), ['idestatus' => 'esterelizado']);
         $estatus = Estatus::find()->where(['idestatus'=>$this->esterelizado])->one();
         return $estatus;
+    }
+    public function getEsterelizado()
+    {
+        return $this->hasOne(Estatus::className(), ['idestatus' => 'esterelizado']);
     }
 
     /**
@@ -249,9 +276,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascProcedencia()
     {
-        //return $this->hasOne(Procedencia::className(), ['idprocedencia' => 'idprocedencia']);
         $procedencia = Procedencia::find()->where(['idprocedencia'=>$this->idprocedencia])->one();
         return $procedencia;
+    }
+    public function getIdprocedencia()
+    {
+        return $this->hasOne(Procedencia::className(), ['idprocedencia' => 'idprocedencia']);
     }
 
     /**
@@ -261,9 +291,12 @@ class Mascota extends \yii\db\ActiveRecord
      */
     public function getMascPropietario()
     {
-        //return $this->hasOne(Propietario::className(), ['idpropietario' => 'idpropietario']);
         $propietario = Propietario::find()->where(['idpropietario'=>$this->idpropietario])->one();
         return $propietario;
+    }
+    public function getIdpropietario()
+    {
+        return $this->hasOne(Propietario::className(), ['idpropietario' => 'idpropietario']);
     }
 
 }

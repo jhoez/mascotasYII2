@@ -8,7 +8,10 @@ use yii\widgets\ActiveForm;
 <div class="row clearfix">
     <div class="col-md-offset-2 col-md-8 col-md-offset-2">
         <div class="registro-form">
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin([
+                //'method'=>'POST',
+                //'enableClientValidation'=>true
+            ]); ?>
             <h3>Datos del dueño de la mascota</h3>
             <hr>
             <div class="form-group">

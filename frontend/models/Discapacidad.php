@@ -68,6 +68,24 @@ class Discapacidad extends \yii\db\ActiveRecord
     }
 
     /**
+    *   metodo para actualizar una discapacidad
+    *   @return model || false
+    *   @method actualizar
+    */
+    public function actualizar()
+    {
+        $discapacidad = Discapacidad::find()->where(['iddiscapacidad'=>$this->iddiscapacidad])->one();
+        $discapacidad->idmascota = $this->idmascota;
+        $discapacidad->nombre = $this->nombre;
+
+        if ($discapacidad->save()) {
+            return $discapacidad;
+        }else {
+            return false;
+        }
+    }
+
+    /**
      * Gets query for [[Idmascota0]].
      *
      * @return \yii\db\ActiveQuery

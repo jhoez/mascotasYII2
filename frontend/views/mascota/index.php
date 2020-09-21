@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use frontend\models\Mascota;
@@ -14,11 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a('Create Mascota', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Estadistica', ['estadistica'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Registrar Mascota', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Reportes', ['reportes'], ['class' => 'btn btn-primary']) ?>
     </p>
-
-    <?php //echo "<pre>";var_dump($dataProvider);die; ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -32,73 +30,77 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>false
             ],*/
             [
-                'header'=>'Nombre',
+                'label'=>'Nombre',
                 'attribute' => 'nombre',
-                'value' => 'nombre',
+                'value' => function($data){
+                    return $data->nombre;
+                },
             ],
             [
-                'header'=>'Edad',
+                'label'=>'Edad',
                 'attribute' => 'edad',
-                'value' => 'edad'
+                'value' => function($data){
+                    return $data->edad;
+                }
             ],
             [
-                'header'=>'Sexo',
+                'label'=>'Sexo',
                 'attribute' => 'sexo',
                 'value' => function($data){
                     return $data->getMascSexo()->nombre;
                 }
             ],
             [
-                'header'=>'Tipo de Mascota',
+                'label'=>'Tipo de Mascota',
                 'attribute' => 'sexo',
                 'value' => function($data){
                     return $data->getMascTipoMascota()->getEspTipo()->nombre;
                 }
             ],
             [
-                'header'=>'Esta vacunado',
+                'label'=>'Esta vacunado',
                 'attribute' => 'vacuna_antirab',
                 'value' => function($data){
                     return $data->getMascEstaVacunado()->nombre;
                 }
             ],
             [
-                'header'=>'Esta desparacitado',
+                'label'=>'Esta desparacitado',
                 'attribute' => 'desparacitado',
                 'value' => function($data){
                     return $data->getMascEstaDesparacitado()->nombre;
                 }
             ],
             [
-                'header'=>'Tiene discapacidad',
+                'label'=>'Tiene discapacidad',
                 'attribute'=>'discapacidad',
                 'value'=> function($data){
                     return $data->getMascTieneDiscapacidad()->nombre;
                 }
             ],
             [
-                'header'=>'Discapacidad',
+                'label'=>'Discapacidad',
                 'attribute'=>'nombre',
                 'value'=> function($data){
                     return $data->getMascDiscapacidad()->nombre;
                 }
             ],
             [
-                'header'=>'Tiene Tratamiento',
+                'label'=>'Tiene Tratamiento',
                 'attribute'=>'tratamiento',
                 'value'=> function($data){
                     return $data->getMascTieneTratamiento()->nombre;
                 }
             ],
             [
-                'header'=>'Tratamiento',
+                'label'=>'Tratamiento',
                 'attribute'=>'nombre',
                 'value'=> function($data){
                     return $data->getMascTratamiento()->nombre;
                 }
             ],
             [
-                'header'=>'Esta esterilizado',
+                'label'=>'Esta esterilizado',
                 'attribute'=>'esterelizado',
                 'value'=> function($data){
                     return $data->getMascEstaEsterelizado()->nombre;
@@ -146,3 +148,32 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 </div>
+
+<?php
+/*
+'download' => function ($url, $model) {
+       return Html::a(
+           '<span class="glyphicon glyphicon-arrow-download"></span>',
+           ['another-controller/anotner-action', 'id' => $model->id],
+           [
+               'title' => 'Download',
+               'data-pjax' => '0',
+           ]
+       );
+},
+
+
+filtro de campo
+
+[
+               'attribute' => 'permiso_estatus_id', // Debe llamarse igual a la llave foránea
+               'value' => 'permisoEstatus.nombre', // Se deberá de colocar el nombre del campo con el cual se filtrará, puede usarse el mismo nombre de acuerdo al modelo
+               'filterType' => GridView::FILTER_SELECT2, //No cambia dejarlo tal cual
+               'filter' => ArrayHelper::map($permisoStatus, 'id', 'nombre'), //Se debe de mapear el arreglo
+               'filterWidgetOptions' =>[
+                   'pluginOptions' => [ 'allowClear' => true ],
+               ],
+               'filterInputOptions' => [ 'placeholder' =>  'Estatus Solicitud' ], // Si así lo desea puedes agregar un place holder
+           ], 
+*/
+?>

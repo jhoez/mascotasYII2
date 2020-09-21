@@ -32,15 +32,27 @@ class Usuario extends ActiveRecord implements IdentityInterface
         return 'regmasc.usuario';
     }
 
-    public function getUsername()
-       {
-           return Yii::$app->user->identity->username;
-       }
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username'=>'Usuario',
+            'password'=>'Contraseña',
+            'email'=>'Correo'
+        ];
+    }
 
-       public function getName()
-       {
-           return Yii::$app->user->identity->name;
-       }
+    public function getUsername()
+    {
+        return Yii::$app->user->identity->username;
+    }
+
+    public function getName()
+    {
+        return Yii::$app->user->identity->name;
+    }
 
     /**
      * {@inheritdoc}

@@ -39,13 +39,12 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems = [
             ['label' => 'Login', 'url' => ['/site/login']],
-            ['label' => 'Signup', 'url' => ['/site/signup']],
         ];
     } else {
         $menuItems = [
             ['label' => 'Home', 'url' => ['/site/index'] ],
             ['label' => 'Mascotas','url' => ['/mascota/index'] ],
-            ['label' => 'Reporte','url' => ['/mascota/estadistica'] ],
+            ['label' => 'Reporte','url' => ['/mascota/reportes'] ],
             //['label' => 'Signup', 'url' => ['/site/signup']],
             //['label' => 'About', 'url' => ['/site/about'] ],
             //['label' => 'Contact', 'url' => ['/site/contact'] ],

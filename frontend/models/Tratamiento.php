@@ -68,6 +68,24 @@ class Tratamiento extends \yii\db\ActiveRecord
     }
 
     /**
+    *   metodo para actualizar una tratamiento
+    *   @return boolean || objeto
+    *   @method actualizar
+    */
+    public function actualizar()
+    {
+        $tratamiento = Tratamiento::find()->where(['idtratamiento'=>$this->idtratamiento])->one();
+        $tratamiento->idmascota = $this->idmascota;
+        $tratamiento->nombre = $this->nombre;
+
+        if ($tratamiento->save()) {
+            return $tratamiento;
+        }else {
+            return false;
+        }
+    }
+
+    /**
      * Gets query for [[Idmascota0]].
      *
      * @return \yii\db\ActiveQuery

@@ -18,7 +18,7 @@ class MascotaSearch extends Mascota
     {
         return [
             [['idmascota', 'idespecies', 'idprocedencia', 'idpropietario', 'sexo', 'vacuna_antirab', 'desparacitado', 'discapacidad', 'tratamiento', 'esterelizado'], 'integer'],
-            [['nombre', 'edad', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'safe'],
+            [['nombre','sexo', 'edad'], 'safe'],
         ];
     }
 
@@ -46,6 +46,9 @@ class MascotaSearch extends Mascota
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder'=>['idmascota'=>SORT_DESC]
+            ],
             'pagination' => [
                 'pageSize' => 5,
             ],
@@ -76,9 +79,7 @@ class MascotaSearch extends Mascota
         ]);
 
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
-            ->andFilterWhere(['ilike', 'edad', $this->edad])
-            ->andFilterWhere(['ilike', 'created_by', $this->created_by])
-            ->andFilterWhere(['ilike', 'updated_by', $this->updated_by]);
+            ->andFilterWhere(['ilike', 'edad', $this->edad]);
 
         return $dataProvider;
     }

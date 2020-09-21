@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 
 <div class="row clearfix">
     <div class="col-md-offset-2 col-md-8 col-md-offset-2">
-        <div class="registro-form">
+        <div class="mascota-form">
             <?php $form = ActiveForm::begin(); ?>
             <h3>Datos del dueño de la mascota</h3>
             <hr>
@@ -26,17 +26,17 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($propietario, 'cedula')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
+                    <?= $form->field($propietario, 'cedula')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($propietario, 'nombres')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($propietario, 'nombres')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($propietario, 'apellidos')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($propietario, 'apellidos')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
@@ -51,7 +51,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($direccion, 'ncasa')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($direccion, 'ncasa')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
@@ -66,12 +66,12 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($propietario, 'correo')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($propietario, 'correo')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($propietario, 'telefono')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($propietario, 'telefono')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
 
@@ -90,7 +90,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($mascota, 'nombre')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($mascota, 'nombre')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
@@ -105,7 +105,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($mascota, 'edad')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($mascota, 'edad')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
@@ -120,16 +120,16 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($especies, 'raza')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($especies, 'raza')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($especies, 'color')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($especies, 'color')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('Vacuna', 'vacuna_antirab', ['class' => ''])?>
+                <?= Html::label('Esta Vacunado', 'vacuna_antirab', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
                         $mascota, 'vacuna_antirab',
@@ -139,7 +139,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('¿Desparacitado?', 'desparacitado', ['class' => ''])?>
+                <?= Html::label('¿Esta Desparacitado?', 'desparacitado', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
                         $mascota, 'desparacitado',
@@ -160,7 +160,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($discapacidad, 'nombre')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($discapacidad, 'nombre')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">
@@ -175,7 +175,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="form-group">
                 <div class="">
-                    <?= $form->field($tratamiento, 'nombre')->textInput() ?>
+                    <?= $form->field($tratamiento, 'nombre')->textInput(['class' => 'form-control imput-md']) ?>
                 </div>
             </div>
             <div class="form-group">

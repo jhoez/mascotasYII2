@@ -125,7 +125,7 @@ $this->title = 'Mascotas';
 
         <div class="row clearfix">
             <div class="col-md-offset-2 col-md-8 col-md-offset-2">
-                <div class="registro-form">
+                <div class="site-form">
                     <?php $form = ActiveForm::begin(); ?>
                     <h3>Datos del dueño de la mascota</h3>
                     <hr>
@@ -149,12 +149,12 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($propietario, 'nombres')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($propietario, 'nombres')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($propietario, 'apellidos')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($propietario, 'apellidos')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -169,7 +169,7 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($direccion, 'ncasa')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($direccion, 'ncasa')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -184,12 +184,12 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($propietario, 'correo')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($propietario, 'correo')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($propietario, 'telefono')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($propietario, 'telefono')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
 
@@ -208,7 +208,7 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($mascota, 'nombre')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($mascota, 'nombre')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -223,7 +223,7 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($mascota, 'edad')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($mascota, 'edad')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -238,16 +238,16 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($especies, 'raza')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($especies, 'raza')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($especies, 'color')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($especies, 'color')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('Vacuna', 'vacuna_antirab', ['class' => ''])?>
+                        <?= Html::label('Esta Vacunado', 'vacuna_antirab', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
                                 $mascota, 'vacuna_antirab',
@@ -257,7 +257,7 @@ $this->title = 'Mascotas';
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('¿Desparacitado?', 'desparacitado', ['class' => ''])?>
+                        <?= Html::label('¿Esta Desparacitado?', 'desparacitado', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
                                 $mascota, 'desparacitado',
@@ -278,7 +278,7 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($discapacidad, 'nombre')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($discapacidad, 'nombre')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -293,7 +293,7 @@ $this->title = 'Mascotas';
                     </div>
                     <div class="form-group">
                         <div class="">
-                            <?= $form->field($tratamiento, 'nombre')->textInput() ?>
+                            <?= $form->field($tratamiento, 'nombre')->textInput(['maxlength' => true,'class' => 'form-control imput-md']) ?>
                         </div>
                     </div>
                     <div class="form-group">

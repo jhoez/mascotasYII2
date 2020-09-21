@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <style>
+        <!--<style>
         * {
             margin:0px;
             padding:0px;
@@ -57,7 +57,7 @@
             vertical-align: middle;
             text-align:center;
         }
-        </style>
+        </style>-->
     </head>
 <body>
     <page backtop="15" backbottom="15" backleft="0" backright="0">

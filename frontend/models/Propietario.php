@@ -39,7 +39,8 @@ class Propietario extends \yii\db\ActiveRecord
         return [
             [['nombres', 'apellidos', 'cedula', 'telefono', 'nacionalidad', 'correo'], 'required'],
             [['cedula', 'id_persona_carnet'], 'default', 'value' => null],
-            [['cedula', 'id_persona_carnet'], 'integer'],
+            [['idpropietario', 'cedula', 'id_persona_carnet'], 'integer'],
+            ['cedula','match','pattern'=>'/^[0-9]+$/i','message'=>'Solo se aceptan Numeros'],
             [['nombres', 'apellidos', 'correo'], 'string', 'max' => 255],
             [['telefono'], 'string', 'max' => 45],
             [['nacionalidad'], 'string', 'max' => 1],
@@ -57,7 +58,6 @@ class Propietario extends \yii\db\ActiveRecord
             'nombres' => 'Nombres',
             'apellidos' => 'Apellidos',
             'cedula' => 'Cedula',
-            'estatus' => 'Estatus',
             'telefono' => 'Telefono',
             'nacionalidad' => 'Nacionalidad',
             'correo' => 'Correo',
@@ -80,6 +80,28 @@ class Propietario extends \yii\db\ActiveRecord
         $propietario->nacionalidad = $this->nacionalidad;
         $propietario->correo = $this->correo;
 
+        if ( $propietario->save() ) {
+            return $propietario;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+    *   metodo para actualizar DATOS del PROPIETARIO
+    *   @return model | false
+    *   @method actualizar
+    */
+    public function actualizar ()
+    {
+        $propietario = Propietario::find()->where(['idpropietario'=>$this->idpropietario])->one();
+        $propietario->nombres = $this->nombres;
+        $propietario->apellidos = $this->apellidos;
+        $propietario->cedula = $this->cedula;
+        $propietario->telefono = $this->telefono;
+        $propietario->nacionalidad = $this->nacionalidad;
+        $propietario->correo = $this->correo;
+        
         if ( $propietario->save() ) {
             return $propietario;
         }else {

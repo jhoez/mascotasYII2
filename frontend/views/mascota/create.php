@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Registros de Mascota', ['index'], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Estadistica', ['estadistica'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Reportes', ['reportes'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= $this->render('_form', [

@@ -33,7 +33,7 @@ class Especies extends \yii\db\ActiveRecord
         return [
             [['idtipo', 'raza', 'color'], 'required'],
             [['idtipo'], 'default', 'value' => null],
-            [['idtipo'], 'integer'],
+            [['idespecies', 'idtipo'], 'integer'],
             [['raza', 'color'], 'string', 'max' => 255],
             [['idtipo'], 'exist', 'skipOnError' => true, 'targetClass' => Estatus::className(), 'targetAttribute' => ['idtipo' => 'idestatus']],
         ];
@@ -52,9 +52,33 @@ class Especies extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+    *   metodo para registrar DATOS de ESPECIES
+    *   @return model | false
+    *   @method registrar
+    */
     public function registrar()
     {
         $especies = new Especies;
+        $especies->idtipo = $this->idtipo;
+        $especies->raza = $this->raza;
+        $especies->color = $this->color;
+
+        if ( $especies->save() ) {
+            return $especies;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+    *   metodo para actualizar DATOS de ESPECIES
+    *   @return model | false
+    *   @method actualizar
+    */
+    public function actualizar()
+    {
+        $especies = Especies::findOne($this->idespecies);
         $especies->idtipo = $this->idtipo;
         $especies->raza = $this->raza;
         $especies->color = $this->color;

@@ -18,6 +18,7 @@ class DireccionSearch extends Direccion
     {
         return [
             [['iddireccion', 'idpropietario', 'idislas', 'ncasa', 'id_calle'], 'integer'],
+            [['iddireccion', 'idpropietario', 'idislas', 'ncasa', 'id_calle'], 'safe'],
         ];
     }
 

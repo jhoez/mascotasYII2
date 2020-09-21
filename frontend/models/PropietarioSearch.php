@@ -21,7 +21,6 @@ class PropietarioSearch extends Propietario
             [['nombres', 'apellidos', 'telefono', 'nacionalidad', 'correo'], 'safe'],
         ];
     }
-
     /**
      * {@inheritdoc}
      */

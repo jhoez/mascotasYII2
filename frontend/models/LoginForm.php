@@ -13,5 +13,16 @@ class LoginForm extends Model{
 			[['username','password'],'required','message'=>'Campo requerido']
 		];
 	}
+
+	/**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username'=>'Usuario',
+            'password'=>'Contraseña',
+        ];
+    }
 }
 ?>

@@ -35,7 +35,7 @@ class Direccion extends \yii\db\ActiveRecord
         return [
             [['idislas', 'id_calle'], 'required'],
             [['idpropietario', 'idislas', 'ncasa', 'id_calle'], 'default', 'value' => null],
-            [['idpropietario', 'idislas', 'ncasa', 'id_calle'], 'integer'],
+            [['iddireccion', 'idpropietario', 'idislas', 'ncasa', 'id_calle'], 'integer'],
             [['id_calle'], 'exist', 'skipOnError' => true, 'targetClass' => Calle::className(), 'targetAttribute' => ['id_calle' => 'id']],
             [['idislas'], 'exist', 'skipOnError' => true, 'targetClass' => Islas::className(), 'targetAttribute' => ['idislas' => 'idislas']],
             [['idpropietario'], 'exist', 'skipOnError' => true, 'targetClass' => Propietario::className(), 'targetAttribute' => ['idpropietario' => 'idpropietario']],
@@ -71,6 +71,27 @@ class Direccion extends \yii\db\ActiveRecord
 
         if ( $direccion->save() ) {
             return $direccion;
+        }else {
+            return false;
+        }
+
+    }
+
+    /**
+    *   metodo para actualizar DATOS de DIRECCION
+    *   @return model | false
+    *   @method actualizar
+    */
+    public function actualizar ()
+    {
+        $dir = Direccion::find()->where(['iddireccion'=>$this->iddireccion])->one();
+        $dir->idpropietario = $this->idpropietario;
+        $dir->idislas = $this->idislas;
+        $dir->ncasa = $this->ncasa;
+        $dir->id_calle = $this->id_calle;
+
+        if ( $dir->save() ) {
+            return $dir;
         }else {
             return false;
         }

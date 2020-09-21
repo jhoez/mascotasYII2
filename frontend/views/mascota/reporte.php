@@ -5,11 +5,13 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'Reportes de Mascotas';
 $this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register($this);
+
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 <p>
-    <?= Html::a('Create Mascota', ['create'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Registrar Mascota', ['create'], ['class' => 'btn btn-primary']) ?>
 </p>
 
 <div class="row clearfix">

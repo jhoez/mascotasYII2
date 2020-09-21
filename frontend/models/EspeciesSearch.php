@@ -21,7 +21,6 @@ class EspeciesSearch extends Especies
             [['raza', 'color'], 'safe'],
         ];
     }
-
     /**
      * {@inheritdoc}
      */

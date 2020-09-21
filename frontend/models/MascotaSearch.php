@@ -11,6 +11,7 @@ use frontend\models\Mascota;
  */
 class MascotaSearch extends Mascota
 {
+    public $cedula;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,11 @@ class MascotaSearch extends Mascota
     {
         return [
             [['idmascota', 'idespecies', 'idprocedencia', 'idpropietario', 'sexo', 'vacuna_antirab', 'desparacitado', 'discapacidad', 'tratamiento', 'esterelizado'], 'integer'],
+<<<<<<< HEAD
             [['nombre','sexo', 'edad'], 'safe'],
+=======
+            [['nombre', 'edad', 'created_by', 'created_at', 'updated_by', 'updated_at','cedula'], 'safe'],
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
         ];
     }
 
@@ -40,7 +45,8 @@ class MascotaSearch extends Mascota
      */
     public function search($params)
     {
-        $query = Mascota::find();
+        $query = Mascota::find()
+        ->innerJoinWith('idpropietario');
 
         // add conditions that should always apply here
 
@@ -79,7 +85,14 @@ class MascotaSearch extends Mascota
         ]);
 
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
+<<<<<<< HEAD
             ->andFilterWhere(['ilike', 'edad', $this->edad]);
+=======
+            ->andFilterWhere(['ilike', 'edad', $this->edad])
+            ->andFilterWhere(['ilike', 'created_by', $this->created_by])
+            ->andFilterWhere(['ilike', 'updated_by', $this->updated_by])
+            ->andFilterWhere(['ilike', 'idpropietario.cedula', $this->cedula]);
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
 
         return $dataProvider;
     }

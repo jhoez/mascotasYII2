@@ -30,6 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>false
             ],*/
             [
+<<<<<<< HEAD
+=======
+                'header'=>'Cedula',
+                'attribute' => 'cedula',
+                'value' => 'idpropietario.cedula',
+            ],
+            [
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
                 'label'=>'Nombre',
                 'attribute' => 'nombre',
                 'value' => function($data){
@@ -174,6 +182,10 @@ filtro de campo
                    'pluginOptions' => [ 'allowClear' => true ],
                ],
                'filterInputOptions' => [ 'placeholder' =>  'Estatus Solicitud' ], // Si así lo desea puedes agregar un place holder
+<<<<<<< HEAD
            ], 
+=======
+           ],
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
 */
 ?>

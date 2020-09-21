@@ -6,7 +6,10 @@ use yii\widgets\ActiveForm;
 $this->title = 'Reportes de Mascotas';
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+<<<<<<< HEAD
 
+=======
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>

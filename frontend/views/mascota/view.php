@@ -16,8 +16,19 @@ $this->params['breadcrumbs'][] = 'Detalles';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+<<<<<<< HEAD
         <?= Html::a('Registrar Mascota', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Registros Mascota', ['index'], ['class' => 'btn btn-primary']) ?>
+=======
+        <?= Html::a('Actualizar', ['update', 'id' => $model->idmascota], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->idmascota], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Esta seguro de eliminar este registro?',
+                'method' => 'post',
+            ],
+        ]) ?>
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
     </p>
 
     <div class="panel-body">

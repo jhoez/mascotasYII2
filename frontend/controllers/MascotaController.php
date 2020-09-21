@@ -241,7 +241,11 @@ class MascotaController extends Controller
                     'filename'=> 'ReporteMascota-'.date('Y-m-d h:i:s',time()).'.pdf',
                     // format content from your own css file if needed or use the
                     // enhanced bootstrap css built by Krajee for mPDF formatting
+<<<<<<< HEAD
                     'cssFile' => '@web/css/estilopdf.css',
+=======
+                    'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
                     'cssInline' => '.kv-heading-1{font-size:12px}',// any css to be embedded if required
                     //'options' => ['title' => 'Reporte de Mascota'],// set mPDF properties on the fly
                      // call mPDF methods on the fly
@@ -250,6 +254,7 @@ class MascotaController extends Controller
                         //'SetFooter'=>['{PAGENO}'],
                     ]
                 ]);
+<<<<<<< HEAD
                 return $pdf->render();
 
                 /*$pdf = Yii::$app->pdf; // or new Pdf();
@@ -260,6 +265,13 @@ class MascotaController extends Controller
                 // return the pdf output as per the destination setting
                 Yii::$app->session->setFlash('success', '¡Se ha creado el reporte!');
                 $this->refresh();
+=======
+
+                // return the pdf output as per the destination setting
+                Yii::$app->session->setFlash('success', '¡Se ha creado el reporte!');
+                $this->refresh();
+                return $pdf->render();
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
             }else {
                 Yii::$app->session->setFlash('warning', '¡No coinciden los datos que solicita!');
             }
@@ -415,7 +427,11 @@ class MascotaController extends Controller
         $propietario    = Propietario::find()->where(['idpropietario'=>$mascota->idpropietario])->one();
         $direccion      = Direccion::find()->where(['idpropietario'=>$propietario->idpropietario])->one();
         $islas          = Islas::find()->asArray()->all();
+<<<<<<< HEAD
         $especies       = Especies::find()->where(['idespecies'=>$mascota->idespecies])->one();
+=======
+        $especies       = Especies::find()->where(['idtipo'=>$mascota->idespecies])->one();
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
         $tipo_especies  = Estatus::find()->asArray()->where(['id_padre' => 1])->all();
         $sexo           = Estatus::find()->asArray()->where(['id_padre' => 7])->all();
         $calle          = Calle::find()->asArray()->all();
@@ -441,6 +457,7 @@ class MascotaController extends Controller
                 $discapacidad->validate() &&
                 $tratamiento->validate()
             ) {
+<<<<<<< HEAD
                 $propietario = $propietario->actualizar();
                 if ( is_object($propietario) ){
                     $direccion = $direccion->actualizar();
@@ -454,6 +471,41 @@ class MascotaController extends Controller
                                     $tratamiento = $tratamiento->actualizar();
                                     if ( is_object($tratamiento) ) {
                                         Yii::$app->session->setFlash('success', '¡Se ha Actualizado el registro!');
+=======
+                //echo "<pre>";var_dump($_POST);die;
+                $propietario->nombres = Html::encode($_POST['Propietario']['nombres']);
+                $propietario->apellidos = Html::encode($_POST['Propietario']['apellidos']);
+                $propietario->cedula = Html::encode($_POST['Propietario']['cedula']);
+                $propietario->telefono = Html::encode($_POST['Propietario']['telefono']);
+                $propietario->nacionalidad = Html::encode($_POST['Propietario']['nacionalidad']);
+                $propietario->correo = Html::encode($_POST['Propietario']['correo']);
+                if ( $propietario->update() ){
+                    $direccion->idislas = Html::encode($_POST['Direccion']['idislas']);
+                    $direccion->ncasa = Html::encode($_POST['Direccion']['ncasa']);
+                    $direccion->id_calle = Html::encode($_POST['Direccion']['id_calle']);
+                    if ( $direccion->update() ){
+                        $especies->idtipo = Html::encode($_POST['Especies']['idtipo']);
+                        $especies->raza = Html::encode($_POST['Especies']['raza']);
+                        $especies->color = Html::encode($_POST['Especies']['color']);
+                        if ( $especies->update() ) {
+                            $mascota->idespecies = $especies->idespecies;
+                            $mascota->idprocedencia = Html::encode($_POST['Mascota']['idprocedencia']);
+                            $mascota->idpropietario = $propietario->idpropietario;
+                            $mascota->nombre = Html::encode($_POST['Mascota']['nombre']);
+                            $mascota->sexo = Html::encode($_POST['Mascota']['sexo']);
+                            $mascota->edad = Html::encode($_POST['Mascota']['edad']);
+                            $mascota->vacuna_antirab = Html::encode($_POST['Mascota']['vacuna_antirab']);
+                            $mascota->desparacitado = Html::encode($_POST['Mascota']['desparacitado']);
+                            $mascota->discapacidad = Html::encode($_POST['Mascota']['discapacidad']);
+                            $mascota->tratamiento = Html::encode($_POST['Mascota']['tratamiento']);
+                            $mascota->esterelizado = Html::encode($_POST['Mascota']['esterelizado']);
+                            if ( $mascota->update() ) {
+                                $discapacidad->nombre = Html::encode($_POST['Discapacidad']['nombre']);
+                                if ( $discapacidad->update() ) {
+                                    $tratamiento->nombre = Html::encode($_POST['Tratamiento']['nombre']);
+                                    if ( $tratamiento->update() ) {
+                                        Yii::$app->session->setFlash('success', '¡Se ha Actualizado una Mascota!');
+>>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
                                         return $this->redirect(['view', 'id' => $mascota->idmascota]);
                                     }
                                 }

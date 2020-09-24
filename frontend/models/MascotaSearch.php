@@ -11,19 +11,19 @@ use frontend\models\Mascota;
  */
 class MascotaSearch extends Mascota
 {
-    public $cedula;
+    public $idtipo;
+    //public $tratam;
+    //public $discap;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['idmascota', 'idespecies', 'idprocedencia', 'idpropietario', 'sexo', 'vacuna_antirab', 'desparacitado', 'discapacidad', 'tratamiento', 'esterelizado'], 'integer'],
-<<<<<<< HEAD
-            [['nombre','sexo', 'edad'], 'safe'],
-=======
-            [['nombre', 'edad', 'created_by', 'created_at', 'updated_by', 'updated_at','cedula'], 'safe'],
->>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
+            //[['tratam','discap'],'string', 'max' => 255],
+            [['idtipo','idmascota', 'idespecies', 'idprocedencia', 'idpropietario', 'sexo', 'statusvacunado', 'statusdesparacitado', 'statusdiscapacidad', 'statustratamiento', 'statusesterilizado'], 'integer'],
+            [['nombre', 'edad'], 'safe'],
         ];
     }
 
@@ -45,8 +45,9 @@ class MascotaSearch extends Mascota
      */
     public function search($params)
     {
-        $query = Mascota::find()
-        ->innerJoinWith('idpropietario');
+        $query = Mascota::find()->joinWith('tipomascota');
+        //->joinWith('nombdiscapacidad')
+        //->joinWith('nombtratamiento');
 
         // add conditions that should always apply here
 
@@ -75,24 +76,20 @@ class MascotaSearch extends Mascota
             'idprocedencia' => $this->idprocedencia,
             'idpropietario' => $this->idpropietario,
             'sexo' => $this->sexo,
-            'vacuna_antirab' => $this->vacuna_antirab,
-            'desparacitado' => $this->desparacitado,
-            'discapacidad' => $this->discapacidad,
-            'tratamiento' => $this->tratamiento,
-            'esterelizado' => $this->esterelizado,
+            'statusvacunado' => $this->statusvacunado,
+            'statusdesparacitado' => $this->statusdesparacitado,
+            'statusdiscapacidad' => $this->statusdiscapacidad,
+            'statustratamiento' => $this->statustratamiento,
+            'statusesterilizado' => $this->statusesterilizado,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'idtipo' => $this->idtipo,//agregada
         ]);
 
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
-<<<<<<< HEAD
             ->andFilterWhere(['ilike', 'edad', $this->edad]);
-=======
-            ->andFilterWhere(['ilike', 'edad', $this->edad])
-            ->andFilterWhere(['ilike', 'created_by', $this->created_by])
-            ->andFilterWhere(['ilike', 'updated_by', $this->updated_by])
-            ->andFilterWhere(['ilike', 'idpropietario.cedula', $this->cedula]);
->>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
+            //->andFilterWhere(['ilike', 'tratam', $this->tratam])
+            //->andFilterWhere(['ilike', 'discap', $this->discap]);
 
         return $dataProvider;
     }

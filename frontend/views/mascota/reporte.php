@@ -6,15 +6,13 @@ use yii\widgets\ActiveForm;
 $this->title = 'Reportes de Mascotas';
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-<<<<<<< HEAD
 
-=======
->>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 <p>
     <?= Html::a('Registrar Mascota', ['create'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Registros de Mascota', ['index'], ['class' => 'btn btn-primary']) ?>
 </p>
 
 <div class="row clearfix">
@@ -73,50 +71,50 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('Vacuna', 'vacuna_antirab', ['class' => ''])?>
+                <?= Html::label('¿Esta Vacunado?', 'statusvacunado', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
-                        $mascota, 'vacuna_antirab',
+                        $mascota, 'statusvacunado',
                         ArrayHelper::map($selec,'idestatus','nombre'),
                         ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                     ) ?>
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('¿Desparacitado?', 'desparacitado', ['class' => ''])?>
+                <?= Html::label('¿Esta Desparacitado?', 'statusdesparacitado', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
-                        $mascota, 'desparacitado',
+                        $mascota, 'statusdesparacitado',
                         ArrayHelper::map($selec,'idestatus','nombre'),
                         ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                     ) ?>
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('¿Tiene alguna discapacidad?', 'discapacidad', ['class' => ''])?>
+                <?= Html::label('¿Tiene alguna discapacidad?', 'statusdiscapacidad', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
-                        $mascota, 'discapacidad',
+                        $mascota, 'statusdiscapacidad',
                         ArrayHelper::map($selec,'idestatus','nombre'),
                         ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                     ) ?>
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('¿Toma algún tratamiento?', 'tratamiento', ['class' => ''])?>
+                <?= Html::label('¿Toma algún tratamiento?', 'statustratamiento', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
-                        $mascota, 'tratamiento',
+                        $mascota, 'statustratamiento',
                         ArrayHelper::map($selec,'idestatus','nombre'),
                         ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                     ) ?>
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::label('¿Esta esterilizado?', 'esterelizado', ['class' => ''])?>
+                <?= Html::label('¿Esta esterilizado?', 'statusesterilizado', ['class' => ''])?>
                 <div class="">
                     <?= Html::activeDropDownList(
-                        $mascota, 'esterelizado',
+                        $mascota, 'statusesterilizado',
                         ArrayHelper::map($selec,'idestatus','nombre'),
                         ['prompt'=>'---- Seleccione ----','class' => 'form-control imput-md']
                     ) ?>

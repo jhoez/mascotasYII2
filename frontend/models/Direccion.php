@@ -33,7 +33,7 @@ class Direccion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idislas', 'id_calle'], 'required'],
+            [['idislas', 'ncasa', 'id_calle'], 'required','message'=>"!Este campo no puede estar vacio¡"],
             [['idpropietario', 'idislas', 'ncasa', 'id_calle'], 'default', 'value' => null],
             [['iddireccion', 'idpropietario', 'idislas', 'ncasa', 'id_calle'], 'integer'],
             [['id_calle'], 'exist', 'skipOnError' => true, 'targetClass' => Calle::className(), 'targetAttribute' => ['id_calle' => 'id']],
@@ -82,16 +82,20 @@ class Direccion extends \yii\db\ActiveRecord
     *   @return model | false
     *   @method actualizar
     */
-    public function actualizar ()
+    public function actualizar($propietario = null)
     {
-        $dir = Direccion::find()->where(['iddireccion'=>$this->iddireccion])->one();
-        $dir->idpropietario = $this->idpropietario;
-        $dir->idislas = $this->idislas;
-        $dir->ncasa = $this->ncasa;
-        $dir->id_calle = $this->id_calle;
+        $direccion = Direccion::find()->where(['idpropietario'=>$propietario->idpropietario])->one();
+        if (is_object($direccion)) {
+        }else {
+            $direccion = new Direccion;
+            $direccion->idpropietario = $propietario->idpropietario;
+        }
+        $direccion->idislas = $this->idislas;
+        $direccion->ncasa = $this->ncasa;
+        $direccion->id_calle = $this->id_calle;
 
-        if ( $dir->save() ) {
-            return $dir;
+        if ( $direccion->save() ) {
+            return $direccion;
         }else {
             return false;
         }
@@ -109,6 +113,11 @@ class Direccion extends \yii\db\ActiveRecord
         $calle = Calle::find()->where(['id'=>$this->id_calle])->one();
         return $calle;
     }
+    //
+    public function getid_calle()
+    {
+        return $this->hasOne(Calle::className(), ['id' => 'id_calle']);
+    }
 
     /**
      * Gets query for [[Idislas0]].
@@ -121,6 +130,11 @@ class Direccion extends \yii\db\ActiveRecord
         $isla = Islas::find()->where(['idislas'=>$this->idislas])->one();
         return $isla;
     }
+    //
+    public function getidislas()
+    {
+        return $this->hasOne(Islas::className(), ['idislas' => 'idislas']);
+    }
 
     /**
      * Gets query for [[Idpropietario0]].
@@ -132,5 +146,10 @@ class Direccion extends \yii\db\ActiveRecord
         //return $this->hasOne(Propietario::className(), ['idpropietario' => 'idpropietario']);
         $propietario = Propietario::find()->where(['idpropietario'=>$this->idpropietario])->one();
         return $propietario;
+    }
+    //
+    public function getidpropietario()
+    {
+        return $this->hasOne(Propietario::className(), ['idpropietario' => 'idpropietario']);
     }
 }

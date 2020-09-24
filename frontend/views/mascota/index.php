@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\jui\DatePicker;
 use frontend\models\Mascota;
 
 /* @var $this yii\web\View */
@@ -22,22 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
-            /*[
-                'header'=>'ID',
-                'attribute' => 'idmascota',
-                'value' => 'idmascota',
-                'filter'=>false
-            ],*/
+            ['class' => 'yii\grid\SerialColumn'],
             [
-<<<<<<< HEAD
-=======
-                'header'=>'Cedula',
-                'attribute' => 'cedula',
-                'value' => 'idpropietario.cedula',
+                'label'=>'fecha',
+                'attribute' => 'created_at',
+                'value' => function($data){
+                    return $data->created_at;
+                },
             ],
             [
->>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
                 'label'=>'Nombre',
                 'attribute' => 'nombre',
                 'value' => function($data){
@@ -54,36 +48,41 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label'=>'Sexo',
                 'attribute' => 'sexo',
+                'filter'=>['8'=>'Macho','9'=>'Hembra'],
                 'value' => function($data){
-                    return $data->getMascSexo()->nombre;
+                    return $data->sexo == '8' ? 'Macho' : 'Hembra';
                 }
             ],
             [
                 'label'=>'Tipo de Mascota',
-                'attribute' => 'sexo',
+                'attribute' => 'idtipo',
+                'filter'=>['2'=>'Perro','3'=>'Gato'],
                 'value' => function($data){
-                    return $data->getMascTipoMascota()->getEspTipo()->nombre;
+                    return $data->getMascTipoMascota()->idtipo == '2' ? 'Perro' : 'Gato';
                 }
             ],
             [
                 'label'=>'Esta vacunado',
-                'attribute' => 'vacuna_antirab',
+                'attribute' => 'statusvacunado',
+                'filter'=>['5'=>'Si','6'=>'No'],
                 'value' => function($data){
-                    return $data->getMascEstaVacunado()->nombre;
+                    return $data->statusvacunado == '5' ? 'Si' : 'No';
                 }
             ],
             [
                 'label'=>'Esta desparacitado',
-                'attribute' => 'desparacitado',
+                'attribute' => 'statusdesparacitado',
+                'filter'=>['5'=>'Si','6'=>'No'],
                 'value' => function($data){
-                    return $data->getMascEstaDesparacitado()->nombre;
+                    return $data->statusdesparacitado == '5' ? 'Si' : 'No';
                 }
             ],
             [
                 'label'=>'Tiene discapacidad',
-                'attribute'=>'discapacidad',
+                'attribute'=>'statusdiscapacidad',
+                'filter'=>['5'=>'Si','6'=>'No'],
                 'value'=> function($data){
-                    return $data->getMascTieneDiscapacidad()->nombre;
+                    return $data->statusdiscapacidad == '5' ? 'Si' : 'No';
                 }
             ],
             [
@@ -95,9 +94,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label'=>'Tiene Tratamiento',
-                'attribute'=>'tratamiento',
+                'attribute'=>'statustratamiento',
+                'filter'=>['5'=>'Si','6'=>'No'],
                 'value'=> function($data){
-                    return $data->getMascTieneTratamiento()->nombre;
+                    return $data->statustratamiento == '5' ? 'Si' : 'No';
                 }
             ],
             [
@@ -109,9 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label'=>'Esta esterilizado',
-                'attribute'=>'esterelizado',
+                'attribute'=>'statusesterilizado',
+                'filter'=>['5'=>'Si','6'=>'No'],
                 'value'=> function($data){
-                    return $data->getMascEstaEsterelizado()->nombre;
+                    return $data->statusesterilizado == '5' ? 'Si' : 'No';
                 }
             ],
             /*
@@ -182,10 +183,6 @@ filtro de campo
                    'pluginOptions' => [ 'allowClear' => true ],
                ],
                'filterInputOptions' => [ 'placeholder' =>  'Estatus Solicitud' ], // Si así lo desea puedes agregar un place holder
-<<<<<<< HEAD
-           ], 
-=======
            ],
->>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
 */
 ?>

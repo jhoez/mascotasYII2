@@ -29,7 +29,7 @@ class Tratamiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre'], 'required'],
+            [['nombre'], 'required','message'=>"!Este campo no puede estar vacio¡"],
             //[['idmascota'], 'default', 'value' => null],
             [['idmascota'], 'integer'],
             [['nombre'], 'string', 'max' => 255],

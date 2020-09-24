@@ -37,13 +37,9 @@ class Propietario extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombres', 'apellidos', 'cedula', 'telefono', 'nacionalidad', 'correo'], 'required'],
+            [['nombres', 'apellidos', 'cedula', 'telefono', 'nacionalidad', 'correo'], 'required','message'=>"!Este campo no puede estar vacio¡"],
             [['cedula', 'id_persona_carnet'], 'default', 'value' => null],
-<<<<<<< HEAD
             [['idpropietario', 'cedula', 'id_persona_carnet'], 'integer'],
-=======
-            [['cedula', 'id_persona_carnet'], 'integer'],
->>>>>>> de8f2512896ab5cdeea6d9077187944d22023e37
             ['cedula','match','pattern'=>'/^[0-9]+$/i','message'=>'Solo se aceptan Numeros'],
             [['nombres', 'apellidos', 'correo'], 'string', 'max' => 255],
             [['telefono'], 'string', 'max' => 45],
@@ -98,14 +94,18 @@ class Propietario extends \yii\db\ActiveRecord
     */
     public function actualizar ()
     {
-        $propietario = Propietario::find()->where(['idpropietario'=>$this->idpropietario])->one();
+        $propietario = Propietario::find()->where(['cedula'=>$this->cedula])->one();
+        if (is_object($propietario)) {
+        }else {
+            $propietario = new Propietario;
+        }
         $propietario->nombres = $this->nombres;
         $propietario->apellidos = $this->apellidos;
         $propietario->cedula = $this->cedula;
         $propietario->telefono = $this->telefono;
         $propietario->nacionalidad = $this->nacionalidad;
         $propietario->correo = $this->correo;
-        
+
         if ( $propietario->save() ) {
             return $propietario;
         }else {
@@ -124,6 +124,11 @@ class Propietario extends \yii\db\ActiveRecord
         $direccion = Direccion::find()->where(['idpropietario'=>$this->idpropietario])->one();
         return $direccion;
     }
+    //
+    public function getidpropietariodir()
+    {
+        return $this->hasMany(Direccion::className(), ['idpropietario' => 'idpropietario']);
+    }
 
     /**
      * Gets query for [[Mascotas]].
@@ -136,6 +141,11 @@ class Propietario extends \yii\db\ActiveRecord
         $mascota = Mascota::find()->where(['idpropietario'=>$this->idpropietario])->one();
         return $mascota;
     }
+    //
+    public function getidpropietariomasc()
+    {
+        return $this->hasMany(Mascota::className(), ['idpropietario' => 'idpropietario']);
+    }
 
     /**
      * Gets query for [[PersonaCarnet]].
@@ -147,5 +157,10 @@ class Propietario extends \yii\db\ActiveRecord
         //return $this->hasOne(CarnetPersona::className(), ['id' => 'id_persona_carnet']);
         $persona = Persona::find()->where(['id'=>$this->id_persona_carnet])->one();
         return $persona;
+    }
+    //
+    public function getid_persona_carnet()
+    {
+        return $this->hasOne(CarnetPersona::className(), ['id' => 'id_persona_carnet']);
     }
 }

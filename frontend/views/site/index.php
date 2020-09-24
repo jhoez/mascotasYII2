@@ -247,30 +247,30 @@ $this->title = 'Mascotas';
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('Esta Vacunado', 'vacuna_antirab', ['class' => ''])?>
+                        <?= Html::label('Esta Vacunado', 'statusvacunado', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
-                                $mascota, 'vacuna_antirab',
+                                $mascota, 'statusvacunado',
                                 ArrayHelper::map($selec,'idestatus','nombre'),
                                 ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                             ) ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('¿Esta Desparacitado?', 'desparacitado', ['class' => ''])?>
+                        <?= Html::label('¿Esta Desparacitado?', 'statusdesparacitado', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
-                                $mascota, 'desparacitado',
+                                $mascota, 'statusdesparacitado',
                                 ArrayHelper::map($selec,'idestatus','nombre'),
                                 ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                             ) ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('¿Tiene alguna discapacidad?', 'discapacidad', ['class' => ''])?>
+                        <?= Html::label('¿Tiene alguna discapacidad?', 'statusdiscapacidad', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
-                                $mascota, 'discapacidad',
+                                $mascota, 'statusdiscapacidad',
                                 ArrayHelper::map($selec,'idestatus','nombre'),
                                 ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                             ) ?>
@@ -282,10 +282,10 @@ $this->title = 'Mascotas';
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('¿Toma algún tratamiento?', 'tratamiento', ['class' => ''])?>
+                        <?= Html::label('¿Toma algún tratamiento?', 'statustratamiento', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
-                                $mascota, 'tratamiento',
+                                $mascota, 'statustratamiento',
                                 ArrayHelper::map($selec,'idestatus','nombre'),
                                 ['prompt' => '---- Seleccione ----','class' => 'form-control imput-md']
                             ) ?>
@@ -297,10 +297,10 @@ $this->title = 'Mascotas';
                         </div>
                     </div>
                     <div class="form-group">
-                        <?= Html::label('¿Esta esterilizado?', 'esterelizado', ['class' => ''])?>
+                        <?= Html::label('¿Esta esterilizado?', 'statusesterilizado', ['class' => ''])?>
                         <div class="">
                             <?= Html::activeDropDownList(
-                                $mascota, 'esterelizado',
+                                $mascota, 'statusesterilizado',
                                 ArrayHelper::map($selec,'idestatus','nombre'),
                                 ['prompt'=>'---- Seleccione ----','class' => 'form-control imput-md']
                             ) ?>

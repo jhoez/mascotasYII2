@@ -31,7 +31,7 @@ class Especies extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idtipo', 'raza', 'color'], 'required'],
+            [['idtipo', 'raza', 'color'], 'required','message'=>"!Este campo no puede estar vacio¡"],
             [['idtipo'], 'default', 'value' => null],
             [['idespecies', 'idtipo'], 'integer'],
             [['raza', 'color'], 'string', 'max' => 255],
@@ -78,7 +78,7 @@ class Especies extends \yii\db\ActiveRecord
     */
     public function actualizar()
     {
-        $especies = Especies::findOne($this->idespecies);
+        $especies = Especies::find()->where(['idespecies'=>$this->idespecies])->one();
         $especies->idtipo = $this->idtipo;
         $especies->raza = $this->raza;
         $especies->color = $this->color;

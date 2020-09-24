@@ -51,7 +51,7 @@ Paso #4.
 Agregar en la sección de filtros el where como el siguiente ejemplo:
 
 
-$query->andFilterWhere(['like', 'usuario.username', $this->username]);
+$query->andFilterWhere(['like', 'username', $this->username]);
 
 En este caso como se observa se escribe el nombre del salto y como segundo parámetro el nombre del método público de la clase search.
 

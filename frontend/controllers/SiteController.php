@@ -176,14 +176,15 @@ class SiteController extends Controller
     }
 
     public function actionLogin(){
+        $this->layout = 'login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $form=new LoginForm();
-        if ( $form->load(yii::$app->request->post()) ){
-            if ($form->validate()){
-                $login=Usuario::find()->where(['username'=>$form->username,'password'=>$form->password])->one();
+        $model=new LoginForm();
+        if ( $model->load(yii::$app->request->post()) ){
+            if ($model->validate()){
+                $login=Usuario::find()->where(['username'=>$model->username,'password'=>$model->password])->one();
                 if (!empty($login)){
                     yii::$app->user->login($login);
                     return $this->redirect(['site/index']);
@@ -192,7 +193,7 @@ class SiteController extends Controller
                 }
             }
         }
-        return $this->render('login',['form'=>$form]);
+        return $this->render('login',['model'=>$model]);
     }
 
     /**

@@ -3,6 +3,12 @@ body {
     height: 100%;
 }
 
+.imgcuerpo {
+    background:url(../images/fondo.jpg)no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

@@ -9,7 +9,8 @@ use yii\widgets\ActiveForm;
     <div class="col-md-offset-2 col-md-8 col-md-offset-2">
         <div class="mascota-form">
             <?php $form = ActiveForm::begin([
-                'enableClientValidation'=>true
+                'enableClientValidation'=>true,
+                
             ]); ?>
             <h3>Datos del dueño de la mascota</h3>
             <hr>

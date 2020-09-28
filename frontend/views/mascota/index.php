@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\jui\DatePicker;
+use kartik\date\DatePicker;
 use frontend\models\Mascota;
 
 /* @var $this yii\web\View */
@@ -30,6 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($data){
                     return $data->created_at;
                 },
+                'filter'=> DatePicker::widget([
+                    'name' => 'created_at',
+                    'type' => DatePicker::TYPE_INPUT,
+                    //'value' => 'created_at',
+                    'pluginOptions' => [
+                        'format' => 'yyyy-mm-dd',
+                        'autoclose' => true,
+                    ]
+                ])
             ],
             [
                 'label'=>'Nombre',

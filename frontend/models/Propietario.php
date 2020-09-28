@@ -45,7 +45,15 @@ class Propietario extends \yii\db\ActiveRecord
             [['telefono'], 'string', 'max' => 45],
             [['nacionalidad'], 'string', 'max' => 1],
             [['id_persona_carnet'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['id_persona_carnet' => 'id']],
+            ['nombres','validarCampo']
         ];
+    }
+
+    public function validarCampo($attribute,$params)
+    {
+        if ($this->$attribute) {
+            $lthis->addError($attribute,"hooooola muuuundo");
+        }
     }
 
     /**

@@ -45,6 +45,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index'] ],
             ['label' => 'Mascotas','url' => ['/mascota/index'] ],
             ['label' => 'Reporte','url' => ['/mascota/reportes'] ],
+            ['label' => 'Administrar Usuario','url' => ['/admin'] ],
             //['label' => 'Signup', 'url' => ['/site/signup']],
             //['label' => 'About', 'url' => ['/site/about'] ],
             //['label' => 'Contact', 'url' => ['/site/contact'] ],

@@ -61,11 +61,12 @@ class Mascota extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idprocedencia', 'nombre', 'sexo', 'edad', 'statusvacunado', 'statusdesparacitado', 'statusdiscapacidad', 'statustratamiento', 'statusesterilizado'], 'required','message'=>"!Este campo no puede estar vacio¡"],
+            [['idprocedencia', 'nombre', 'sexo', 'edad', 'statusvacunado', 'statusdesparacitado', 'statusdiscapacidad', 'statustratamiento', 'statusesterilizado'], 'required'],
             [['idespecies', 'idprocedencia', 'idpropietario', 'sexo', 'statusvacunado', 'statusdesparacitado', 'statusdiscapacidad', 'statustratamiento', 'statusesterilizado'], 'default', 'value' => null],
             [['idespecies', 'idprocedencia', 'idpropietario', 'sexo', 'statusvacunado', 'statusdesparacitado', 'statusdiscapacidad', 'statustratamiento', 'statusesterilizado'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['nombre', 'edad'], 'string', 'max' => 255],
+            ['nombre','validarnombre'],//VALIDACION AJAX
             [['created_by', 'updated_by'], 'string', 'max' => 128],
             [['idespecies'], 'exist', 'skipOnError' => true, 'targetClass' => Especies::className(), 'targetAttribute' => ['idespecies' => 'idespecies']],
             [['sexo'], 'exist', 'skipOnError' => true, 'targetClass' => Estatus::className(), 'targetAttribute' => ['sexo' => 'idestatus']],
@@ -77,6 +78,14 @@ class Mascota extends \yii\db\ActiveRecord
             [['idprocedencia'], 'exist', 'skipOnError' => true, 'targetClass' => Procedencia::className(), 'targetAttribute' => ['idprocedencia' => 'idprocedencia']],
             [['idpropietario'], 'exist', 'skipOnError' => true, 'targetClass' => Propietario::className(), 'targetAttribute' => ['idpropietario' => 'idpropietario']],
         ];
+    }
+
+    public function validarnombre($attribute,$params)
+    {
+        $mascota = Mascota::find()->where(['nombre'=>$this->nombre])->count();
+        if ($mascota != '0') {
+            $this->addError($attribute,"EL NOMBRE DE LA MASCOTA YA EXISTE...");
+        }
     }
 
     /**

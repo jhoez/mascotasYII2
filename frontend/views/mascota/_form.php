@@ -3,14 +3,20 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
+//validacion con valor predeterminando
+//$validateOnSubmit = true;
+//$validateOnChange = true;
+//$validateOnBlur = true;
+//$validateOnType = false;
 ?>
 
 <div class="row clearfix">
     <div class="col-md-offset-2 col-md-8 col-md-offset-2">
         <div class="mascota-form">
             <?php $form = ActiveForm::begin([
+                'id'=>'formulario',
                 'enableClientValidation'=>true,
-                
+                'enableAjaxValidation'=>true
             ]); ?>
             <h3>Datos del dueño de la mascota</h3>
             <hr>

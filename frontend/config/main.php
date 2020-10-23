@@ -19,7 +19,7 @@ return [
             'class' => 'mdm\admin\Module',
             'layout' => 'left-menu', // por defaults es null, cuando no deseas usar el menú Otros valores opcionales son 'right-menu' and 'top-menu'
             'mainLayout' => '@app/views/layouts/main.php',// utiliza el menu del framework
-        ]
+        ],
     ],
     'components' => [
         'authManager' => [
